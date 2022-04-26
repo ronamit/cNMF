@@ -483,7 +483,7 @@ class cNMF():
         n_runs = len(ks)* n_iter
 
         np.random.seed(seed=random_state_seed)
-        nmf_seeds = np.random.randint(low=1, high=(2**32)-1, size=n_runs)
+        nmf_seeds = np.random.randint(low=1, high=(2**32)-1, size=n_runs, dtype=np.int64)
 
         replicate_params = []
         for i, (k, r) in enumerate(itertools.product(k_list, range(n_iter))):
@@ -526,6 +526,7 @@ class cNMF():
             Arguments to be passed to ``non_negative_factorization``
 
         """
+        X = X.astype(np.float64)
         (usages, spectra, niter) = non_negative_factorization(X, **nmf_kwargs)
 
         return(spectra, usages)
